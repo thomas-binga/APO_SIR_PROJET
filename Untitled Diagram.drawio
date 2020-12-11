@@ -1,13 +1,16 @@
-<mxfile host="app.diagrams.net" modified="2020-12-11T15:13:25.208Z" agent="5.0 (Windows)" etag="FVs7YATSwhnm58XnKmrr" version="14.0.1" type="github">
+<mxfile host="app.diagrams.net" modified="2020-12-11T15:25:39.471Z" agent="5.0 (Windows)" etag="MiPVt9XjSCHU_DqPbxje" version="14.0.1" type="github">
   <diagram id="1Q1EzocZoEp-LrVJWuE1" name="Page-1">
     <mxGraphModel dx="1422" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="NkwOou6ovOenbUR8SxcS-18" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="15" width="510" height="765" as="geometry" />
+        </mxCell>
         <mxCell id="UxCLgTN9e_x0eoLWRBKl-1" value="Utilisateur" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="130" y="280" width="30" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="UxCLgTN9e_x0eoLWRBKl-9" value="Gérer les paramètres" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="UxCLgTN9e_x0eoLWRBKl-9" value="Choisir la simulation" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="418" y="430" width="140" height="70" as="geometry" />
         </mxCell>
         <mxCell id="UxCLgTN9e_x0eoLWRBKl-10" value="Lancer la simulation" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -19,8 +22,8 @@
         <mxCell id="UxCLgTN9e_x0eoLWRBKl-12" value="Voir les résultats" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="420" y="70" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="UxCLgTN9e_x0eoLWRBKl-13" value="Simulateur SIR" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
-          <mxGeometry x="290" y="30" width="80" height="30" as="geometry" />
+        <mxCell id="UxCLgTN9e_x0eoLWRBKl-13" value="Simulateur SIR / SEIR / SEIR avec naissance" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="1" vertex="1">
+          <mxGeometry x="220" y="20" width="250" height="30" as="geometry" />
         </mxCell>
         <mxCell id="UxCLgTN9e_x0eoLWRBKl-17" value="Choisir modèle " style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="344" y="550" width="70" height="70" as="geometry" />
@@ -101,6 +104,18 @@
             <mxPoint x="489" y="140" as="sourcePoint" />
             <mxPoint x="489.5" y="190" as="targetPoint" />
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NkwOou6ovOenbUR8SxcS-21" value="" style="edgeStyle=none;html=1;endArrow=none;verticalAlign=bottom;" edge="1" parent="1" target="UxCLgTN9e_x0eoLWRBKl-12">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="170" y="300" as="sourcePoint" />
+            <mxPoint x="470" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NkwOou6ovOenbUR8SxcS-22" value="" style="edgeStyle=none;html=1;endArrow=none;verticalAlign=bottom;" edge="1" parent="1" source="UxCLgTN9e_x0eoLWRBKl-9">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="-100" y="537.94" as="sourcePoint" />
+            <mxPoint x="160" y="320" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
