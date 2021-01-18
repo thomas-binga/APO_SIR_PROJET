@@ -11,6 +11,18 @@ public class Carte {
             }
         }
     }
+    public String toString(){
+        String SR = new String();
+        for(int i=0; i<taille_x;i++){
+            for(int j=0; j<taille_y;j++){
+                int pos = carte[i][j];
+                SR.concat(String.valueOf(pos));
+                SR.concat(" ");
+            }
+            SR.concat("\n");
+        }
+        return SR;
+    }
 
 
 }
