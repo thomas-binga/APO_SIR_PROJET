@@ -1,4 +1,7 @@
-public class Carte {
+/**
+ * Classe représentant la Carte sur laquelle évoluent les individus de la simulation, à chaque case de la carte, le nombre indique le nombre de personnes se situant  à cet endroit.
+ */
+public class Carte { // A faire: variables taille_x et taille_y à rajouter dans parametres
     public int taille_x = 10;
     public int taille_y = 10;
     int[][] carte = new int[taille_x][taille_y];

@@ -1,4 +1,7 @@
-public class Parametres {
+/**
+ * Classe ayant pour but de gérer l'ensemble des paramètres de la simulation.
+ */
+public class Parametres { //A faire, getters pour les variables (alpha, beta, etc ... qui doivent prendre compte de l'age
     public int NbrPop, TauxLetalite, NbrMalades, TempsGuerison;
     public boolean PolitiquesPubliques, Spatialisation;
     public double R0;

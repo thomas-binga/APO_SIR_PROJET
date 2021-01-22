@@ -1,5 +1,8 @@
 import java.util.Hashtable;
 
+/**
+ * Classe dans laquelle sont stockées l'ensemble des données afin de les réstituer textuellement, ou via des graphiques
+ */
 public class Stats {
     Hashtable dicStat = new Hashtable();
     public void update(Population pop){

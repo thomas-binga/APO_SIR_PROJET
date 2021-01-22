@@ -5,6 +5,10 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+/**
+ * Classe représentant la population étudiée dans la simulation, tous les paramêtres sont gérès par une instance de la classe Parametres.
+ * Tous les individus de la populations sont représentés par un 1 sur la carte.
+ */
 public class Population {
     ArrayList<Personne> Pop = new ArrayList<Personne>();
     Parametres Param;

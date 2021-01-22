@@ -1,3 +1,6 @@
+/**
+ * Classe représentant une personne, elle a un état (S, E, I ou R), une position (des coordonnées x et y) et un age (qui influe directement sur les paramêtres SIR)
+ */
 public class Personne {
     //public enum Etat {S,E,I,R};
     public EtatPersonne Etat;
