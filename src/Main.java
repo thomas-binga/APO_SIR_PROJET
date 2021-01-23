@@ -1,8 +1,9 @@
 public class Main {
 
     public static void main(String args[]){ // A faire: adapter coefs selon age (dans Param avec getters)+suite du sujet
-        SEIRn m = new SEIRn();
-        Parametres P = new Parametres(100,0,5,8,false,true,1,0.3,0.2,0.3,0.001,0.004,m);
+        SEIR m = new SEIR();
+        int[] PP = {0,0,0,0};
+        Parametres P = new Parametres(100,0.005,5,8,PP,true,1,0.3,0.12,0.3,0.001,0.004,m);
         Population Pop = new Population(P);
         System.out.println(Pop.Statistiques.dicStat.toString());
         System.out.println(Pop.Map.toString());

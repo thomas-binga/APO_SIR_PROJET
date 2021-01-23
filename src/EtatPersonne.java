@@ -6,5 +6,6 @@ public enum EtatPersonne {
     E,
     I,
     R,
+    D,
     ;
 }

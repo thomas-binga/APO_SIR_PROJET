@@ -10,7 +10,7 @@ import java.util.ListIterator;
  * Tous les individus de la populations sont représentés par un 1 sur la carte.
  */
 public class Population {
-    ArrayList<Personne> Pop = new ArrayList<Personne>();
+    ArrayList<Personne> Pop = new ArrayList<>();
     Parametres Param;
     Carte Map=new Carte();
     public Stats Statistiques = new Stats();
@@ -25,7 +25,7 @@ public class Population {
         int NbrMalades = Param.getNbrMalades();
         for(int i=0; i<NbrMalades; i++){
             int[] loc = RandomLoc();
-            double rnd= Math.random()*10;
+            double rnd= Math.random()*20;
             Pop.add(new Personne("I", loc, 30+(int)rnd));
             int x=loc[0];
             int y=loc[1];
@@ -33,7 +33,7 @@ public class Population {
         }
         for(int i=0; i<NbrPop-NbrMalades;i++){
             int[] loc = RandomLoc();
-            int rnd = (int)Math.random()*10;
+            int rnd = (int) (Math.random() * 10);
             Pop.add(new Personne("S", loc, 30+rnd));
             int x=loc[0];
             int y=loc[1];
@@ -46,47 +46,61 @@ public class Population {
     /**
      *
      */
-    public void Avancer(){ //Reste a faire le déplacement de chaque personne chaque jour.
-        if(Param.Spatialisation) Deplacement();
+    public void Avancer(){
+        if(Param.Spatialisation) Deplacement(Param.PolitiquesPubliques);
            if(Param.Mod instanceof SIR) {
-               for (int i = 0; i < Pop.size(); i++) {
-                   if (Pop.get(i).getEtat() == EtatPersonne.S) {
+               for (Personne personne : Pop) {
+                   if (personne.getEtat() == EtatPersonne.S) {
                        double rnd = Math.random();
                        double Beta = Param.Beta;
-                       if ((rnd < Beta)&&(Contaminable(Pop.get(i)))) {
-                           Pop.get(i).changerEtat("I");
+                       double V = Param.TauxVaccination;
+                       if(rnd<V){
+                           personne.changerEtat("R");
                        }
-                   } else if(Pop.get(i).getEtat()==EtatPersonne.I){
+                       else if ((rnd < Beta) && (Contaminable(personne))) {
+                           personne.changerEtat("I");
+                       }
+                   } else if (personne.getEtat() == EtatPersonne.I) {
                        double rnd = Math.random();
+                       double DeathRate = Param.getTauxLetalite(personne.age);
                        double Gamma = Param.Gamma;
-                       if(rnd < Gamma){
-                           Pop.get(i).changerEtat("R");
+                       if (rnd < DeathRate) {
+                           personne.changerEtat("D");
+                       }
+                       else if (rnd < Gamma) {
+                           personne.changerEtat("R");
                        }
                    }
                    Statistiques.update(this);
                }
            }
            else if(Param.Mod instanceof SEIR){
-               for(int i=0; i<Pop.size();i++){
-                   if(Pop.get(i).getEtat() == EtatPersonne.S){
+               for (Personne personne : Pop) {
+                   if (personne.getEtat() == EtatPersonne.S) {
                        double rnd = Math.random();
                        double Beta = Param.Beta;
-                       if((rnd < Beta)&&(Contaminable(Pop.get(i)))) {
-                           Pop.get(i).changerEtat("E");
+                       double V = Param.TauxVaccination;
+                       if(rnd<V){
+                           personne.changerEtat("R");
                        }
-                   }
-                   else if(Pop.get(i).getEtat()==EtatPersonne.E){
-                       double rnd=Math.random();
-                       double Alpha = Param.Alpha;
-                       if(rnd<Alpha){
-                           Pop.get(i).changerEtat("I");
+                       else if ((rnd < Beta) && (Contaminable(personne))) {
+                           personne.changerEtat("E");
                        }
-                   }
-                   else if(Pop.get(i).getEtat()==EtatPersonne.I){
+                   } else if (personne.getEtat() == EtatPersonne.E) {
                        double rnd = Math.random();
-                       double Gamma= Param.Gamma;
-                       if(rnd<Gamma){
-                           Pop.get(i).changerEtat("R");
+                       double Alpha = Param.Alpha;
+                       if (rnd < Alpha) {
+                           personne.changerEtat("I");
+                       }
+                   } else if (personne.getEtat() == EtatPersonne.I) {
+                       double rnd = Math.random();
+                       double DeathRate = Param.getTauxLetalite(personne.age);
+                       double Gamma = Param.Gamma;
+                       if (rnd < DeathRate) {
+                           personne.changerEtat("D");
+                       }
+                       else if (rnd < Gamma) {
+                           personne.changerEtat("R");
                        }
                    }
                    Statistiques.update(this);
@@ -94,45 +108,52 @@ public class Population {
            }
            else if (Param.Mod instanceof SEIRn){
                 Naissances();
-                for(int i=0; i<Pop.size();i++){
-                    if(Pop.get(i).getEtat() == EtatPersonne.S){
-                        double rnd = Math.random();
-                        double Beta = Param.Beta;
-                        if((rnd < Beta)&&(Contaminable(Pop.get(i)))) {
-                            Pop.get(i).changerEtat("E");
-                        }
-                        rnd=Math.random();
-                        double mu = Param.Mu;
-                        if(rnd<mu){
-                            Pop.get(i).changerEtat("R"); //A changer en D si on rajoute un nouvel etat
-                        }
-                    }
-                    else if(Pop.get(i).getEtat()==EtatPersonne.E){
-                        double rnd=Math.random();
-                        double Alpha = Param.Alpha;
-                        if(rnd<Alpha){
-                            Pop.get(i).changerEtat("I");
-                        }
-                        rnd=Math.random();
-                        double mu = Param.Mu;
-                        if(rnd<mu){
-                            Pop.get(i).changerEtat("R"); //A changer en D si on rajoute un nouvel etat
-                        }
-                    }
-                    else if(Pop.get(i).getEtat()==EtatPersonne.I){
-                        double rnd = Math.random();
-                        double Gamma= Param.Gamma;
-                        if(rnd<Gamma){
-                            Pop.get(i).changerEtat("R");
-                        }
-                        rnd=Math.random();
-                        double mu = Param.Mu;
-                        if(rnd<mu){
-                            Pop.get(i).changerEtat("R"); //A changer en D si on rajoute un nouvel etat
-                        }
-                    }
-                    Statistiques.update(this);
-                }
+               for (Personne personne : Pop) {
+                   if (personne.getEtat() == EtatPersonne.S) {
+                       double rnd = Math.random();
+                       double Beta = Param.Beta;
+                       double V = Param.TauxVaccination;
+                       if(rnd<V){
+                           personne.changerEtat("R");
+                       }
+                       else if ((rnd < Beta) && (Contaminable(personne))) {
+                           personne.changerEtat("E");
+                       }
+                       rnd = Math.random();
+                       double mu = Param.getMu(personne.age);
+                       if (rnd < mu) {
+                           personne.changerEtat("D");
+                       }
+                   } else if (personne.getEtat() == EtatPersonne.E) {
+                       double rnd = Math.random();
+                       double Alpha = Param.Alpha;
+                       if (rnd < Alpha) {
+                           personne.changerEtat("I");
+                       }
+                       rnd = Math.random();
+                       double mu = Param.getMu(personne.age);
+                       if (rnd < mu) {
+                           personne.changerEtat("D");
+                       }
+                   } else if (personne.getEtat() == EtatPersonne.I) {
+                       double rnd = Math.random();
+                       double DeathRate = Param.getTauxLetalite(personne.age);
+                       double Gamma = Param.Gamma;
+
+                       if (rnd < DeathRate) {
+                           personne.changerEtat("D");
+                       }
+                       else if (rnd < Gamma) {
+                           personne.changerEtat("R");
+                       }
+                       rnd = Math.random();
+                       double mu = Param.getMu(personne.age);
+                       if (rnd < mu) {
+                           personne.changerEtat("D");
+                       }
+                   }
+                   Statistiques.update(this);
+               }
            }
        }
 
@@ -145,10 +166,8 @@ public class Population {
      */
     private boolean Contaminable(Personne p){
         int[] loc = p.position.clone();
-        for(int i=0;i<Pop.size();i++){
-            if((distance(loc,Pop.get(i).position)<2)&&(Pop.get(i).getEtat()==EtatPersonne.I)){ //Remplacer le 2 si ajout de parametre distance minimale
-//                System.out.println(loc[0]+","+loc[1]+" "+Pop.get(i).position[0]+","+Pop.get(i).position[1]);
-//                System.out.println(distance(loc,Pop.get(i).position));
+        for (Personne personne : Pop) {
+            if ((distance(loc, personne.position) < 2) && (personne.getEtat() == EtatPersonne.I)) { //Remplacer le 2 si ajout de parametre distance minimale
                 return true;
             }
         }
@@ -166,7 +185,7 @@ public class Population {
         int y1=loc1[1];
         int x2=loc2[0];
         int y2=loc2[1];
-        return Math.sqrt((double)Math.pow((x2-x1), 2)+(double)Math.pow((y2-y1),2));
+        return Math.sqrt(Math.pow((x2-x1), 2) + Math.pow((y2-y1),2));
     }
 
     /**
@@ -188,39 +207,38 @@ public class Population {
         }
     }
 
-    private void Deplacement(){
-        for(int i=0; i<Pop.size();i++){
+    private void Deplacement(int[] PP){
+        double C = 1; // 1 si pas de Confinement, 0.1 sinon;
+        if(PP[0]==1) C=0.1;
+        for (Personne personne : Pop) {
             double rnd = Math.random();
-            if(rnd<0.15){
-                int x = Pop.get(i).position[0];
-                int y = Pop.get(i).position[1];
-                int new_x = (x+1)%Map.taille_x;
-                Pop.get(i).position[0] = new_x;
-                Map.carte[x][y]-=1;
+            if (rnd < 0.15*C) {
+                int x = personne.position[0];
+                int y = personne.position[1];
+                int new_x = (x + 1) % Map.taille_x;
+                personne.position[0] = new_x;
+                Map.carte[x][y] -= 1;
                 Map.carte[new_x][y]++;
-            }
-            else if(rnd<0.30){
-                int x = Pop.get(i).position[0];
-                int y = Pop.get(i).position[1];
-                int new_x = (x-1+Map.taille_x)%Map.taille_x;
-                Pop.get(i).position[0] = new_x;
-                Map.carte[x][y]-=1;
+            } else if (rnd < 0.30*C) {
+                int x = personne.position[0];
+                int y = personne.position[1];
+                int new_x = (x - 1 + Map.taille_x) % Map.taille_x;
+                personne.position[0] = new_x;
+                Map.carte[x][y] -= 1;
                 Map.carte[new_x][y]++;
-            }
-            else if(rnd<0.45){
-                int x = Pop.get(i).position[0];
-                int y = Pop.get(i).position[1];
-                int new_y = (y+1)%Map.taille_y;
-                Pop.get(i).position[1] = new_y;
-                Map.carte[x][y]-=1;
+            } else if (rnd < 0.45*C) {
+                int x = personne.position[0];
+                int y = personne.position[1];
+                int new_y = (y + 1) % Map.taille_y;
+                personne.position[1] = new_y;
+                Map.carte[x][y] -= 1;
                 Map.carte[x][new_y]++;
-            }
-            else if(rnd<0.60){
-                int x = Pop.get(i).position[0];
-                int y = Pop.get(i).position[1];
-                int new_y = (y-1+Map.taille_y)%Map.taille_y;
-                Pop.get(i).position[1] = new_y;
-                Map.carte[x][y]-=1;
+            } else if (rnd < 0.60*C) {
+                int x = personne.position[0];
+                int y = personne.position[1];
+                int new_y = (y - 1 + Map.taille_y) % Map.taille_y;
+                personne.position[1] = new_y;
+                Map.carte[x][y] -= 1;
                 Map.carte[x][new_y]++;
             }
         }
@@ -232,12 +250,10 @@ public class Population {
      */
     private int[] RandomLoc(){
         if(!Param.Spatialisation) {
-            int[] loc = {0, 0};
-            return loc;
+            return new int[]{0, 0};
         }
         else{
-            int[] loc={Math.round((float) Math.random()*(Map.taille_x-1)),Math.round((float) Math.random()*(Map.taille_y-1))};
-            return loc;
+            return new int[]{Math.round((float) Math.random()*(Map.taille_x-1)),Math.round((float) Math.random()*(Map.taille_y-1))};
         }
     }
 
