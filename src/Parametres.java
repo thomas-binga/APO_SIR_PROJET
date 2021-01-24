@@ -1,10 +1,12 @@
+import java.io.FileNotFoundException;
+
 /**
  * Classe ayant pour but de gérer l'ensemble des paramètres de la simulation.
  */
-public class Parametres { //A faire, getters pour les variables (alpha, beta, etc ... qui doivent prendre compte de l'age
-    public int NbrPop, NbrMalades, TempsGuerison;
+public class Parametres {
+    public int NbrPop, NbrMalades, TempsGuerison, NbrJours;
     public boolean Spatialisation;
-    public int[] PolitiquesPubliques;
+    public int[] PolitiquesPubliques; //[
     public double TauxLetalite;
     public double R0;
     public double Beta;
@@ -24,7 +26,8 @@ public class Parametres { //A faire, getters pour les variables (alpha, beta, et
         return NbrMalades;
     }
 
-    public Parametres(int nbrPop, double tauxLetalite, int nbrMalades, int tempsGuerison, int[] politiquesPubliques, boolean spatialisation, double r0, double beta, double gamma, double alpha, double mu, double eta, Modele mod) {
+    public Parametres(int nbrJours, int nbrPop, double tauxLetalite, int nbrMalades, int tempsGuerison, int[] politiquesPubliques, boolean spatialisation, double r0, double beta, double gamma, double alpha, double mu, double eta, Modele mod) {
+        NbrJours=nbrJours;
         NbrPop = nbrPop;
         TauxLetalite = tauxLetalite;
         NbrMalades = nbrMalades;
@@ -46,6 +49,10 @@ public class Parametres { //A faire, getters pour les variables (alpha, beta, et
         Eta = eta;
         Mod = mod;
     }
+    public Parametres() throws FileNotFoundException {
+        PropertyReader prop = new PropertyReader("src/config.properties");
+        prop.SetParameters(this);
+    }
     public double getGamma(int age){
         if(age < 15) return Gamma*1.2;
         if (age < 50) return Gamma;
@@ -61,12 +68,12 @@ public class Parametres { //A faire, getters pour les variables (alpha, beta, et
         else return TauxLetalite*3;
     }
     public double getMu(int age){
-        if(age<10) return TauxLetalite*0.01;
-        if(age<20) return TauxLetalite*0.1;
-        if (age<30) return TauxLetalite*0.2;
-        if(age<50) return TauxLetalite*0.5;
-        if (age<70) return TauxLetalite;
-        if(age<80) return TauxLetalite*1.2;
-        else return TauxLetalite*1.5;
+        if(age<10) return Mu*0.01;
+        if(age<20) return Mu*0.1;
+        if (age<30) return Mu*0.2;
+        if(age<50) return Mu*0.5;
+        if (age<70) return Mu;
+        if(age<80) return Mu*1.2;
+        else return Mu*1.5;
     }
 }

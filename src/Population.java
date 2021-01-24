@@ -1,4 +1,4 @@
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -71,8 +71,8 @@ public class Population {
                            personne.changerEtat("R");
                        }
                    }
-                   Statistiques.update(this);
                }
+               Statistiques.update(this);
            }
            else if(Param.Mod instanceof SEIR){
                for (Personne personne : Pop) {
@@ -103,8 +103,8 @@ public class Population {
                            personne.changerEtat("R");
                        }
                    }
-                   Statistiques.update(this);
                }
+               Statistiques.update(this);
            }
            else if (Param.Mod instanceof SEIRn){
                 Naissances();
@@ -152,8 +152,8 @@ public class Population {
                            personne.changerEtat("D");
                        }
                    }
-                   Statistiques.update(this);
                }
+               Statistiques.update(this);
            }
        }
 
