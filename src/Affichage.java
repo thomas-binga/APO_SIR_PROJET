@@ -12,9 +12,9 @@ public class Affichage {
     public Affichage(Stats data){
         this.data=data;
     }
-    public void showGraphics(int nbr_jours, boolean catE){
+    public void showGraphics(int nbr_jours, String[] courbes){
         // Create Chart
-        final XYChart chart = new XYChartBuilder().width(600).height(400).title("Area Chart").xAxisTitle("X").yAxisTitle("Y").build();
+        final XYChart chart = new XYChartBuilder().width(600).height(400).title("Résultats").xAxisTitle("Jours").yAxisTitle("Nombre de Personnes").build();
 
 // Customize Chart
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -25,13 +25,13 @@ public class Affichage {
        for(int i=0; i<=nbr_jours; i++){
            jours[i]=i;
        }
-       double[] S = getNbr('S');
-        chart.addSeries("Individus Sains", jours, getNbr('S'));
-        chart.addSeries("Individus infectés", jours, getNbr('I'));
-        //if (catE) chart.addSeries("Individus en periode d'incubation", jours, getNbr('E'));
-        chart.addSeries("Individus Morts", jours, getNbr('D'));
-        //chart.addSeries("Individus Rétablis", jours, getNbr('R'));
-
+       for(int i=0; i<courbes.length; i++) {
+           if(courbes[i].equals("S")) chart.addSeries("Individus Sains", jours, getNbr('S'));
+           if(courbes[i].equals("I")) chart.addSeries("Individus infectés", jours, getNbr('I'));
+           if (courbes[i].equals("E")) chart.addSeries("Individus en periode d'incubation", jours, getNbr('E'));
+           if(courbes[i].equals("D")) chart.addSeries("Individus Morts", jours, getNbr('D'));
+           if(courbes[i].equals("R")) chart.addSeries("Individus Rétablis", jours, getNbr('R'));
+       }
 // Schedule a job for the event-dispatching thread:
 // creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
@@ -40,17 +40,13 @@ public class Affichage {
             public void run() {
 
                 // Create and set up the window.
-                JFrame frame = new JFrame("Advanced Example");
+                JFrame frame = new JFrame("Résultats de la simulation");
                 frame.setLayout(new BorderLayout());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 // chart
                 JPanel chartPanel = new XChartPanel<XYChart>(chart);
                 frame.add(chartPanel, BorderLayout.CENTER);
-
-                // label
-                JLabel label = new JLabel("Blah blah blah.", SwingConstants.CENTER);
-                frame.add(label, BorderLayout.SOUTH);
 
                 // Display the window.
                 frame.pack();
@@ -61,7 +57,6 @@ public class Affichage {
     public double[] getNbr(char cat){
         double[] LR = new double[data.memory.size()];
         for(int i=0; i<data.memory.size();i++){
-            System.out.println(data.memory.get(i).get(cat));
             int dd = (int) data.memory.get(i).get(cat);
             double d = dd;
             LR[i]=d;

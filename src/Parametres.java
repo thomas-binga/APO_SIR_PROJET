@@ -16,7 +16,8 @@ public class Parametres {
     public double Eta;
     public double TauxVaccination = 0;
     public Modele Mod;
-
+    PropertyReader prop = new PropertyReader("src/config.properties");
+    public String[] Courbes;
 
 
     public int getNbrPop(){
@@ -26,7 +27,7 @@ public class Parametres {
         return NbrMalades;
     }
 
-    public Parametres(int nbrJours, int nbrPop, double tauxLetalite, int nbrMalades, int tempsGuerison, int[] politiquesPubliques, boolean spatialisation, double r0, double beta, double gamma, double alpha, double mu, double eta, Modele mod) {
+    public Parametres(int nbrJours, int nbrPop, double tauxLetalite, int nbrMalades, int tempsGuerison, int[] politiquesPubliques, boolean spatialisation, double r0, double beta, double gamma, double alpha, double mu, double eta, Modele mod) throws FileNotFoundException {
         NbrJours=nbrJours;
         NbrPop = nbrPop;
         TauxLetalite = tauxLetalite;
@@ -50,7 +51,6 @@ public class Parametres {
         Mod = mod;
     }
     public Parametres() throws FileNotFoundException {
-        PropertyReader prop = new PropertyReader("src/config.properties");
         prop.SetParameters(this);
     }
     public double getGamma(int age){
@@ -75,5 +75,8 @@ public class Parametres {
         if (age<70) return Mu;
         if(age<80) return Mu*1.2;
         else return Mu*1.5;
+    }
+    public void print(){
+        prop.PrintParameters();
     }
 }

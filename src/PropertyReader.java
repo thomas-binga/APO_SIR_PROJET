@@ -1,8 +1,10 @@
+import javax.lang.model.type.NullType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class PropertyReader {
     File configFile;
@@ -53,6 +55,29 @@ public class PropertyReader {
                 SEIRn m3 = new SEIRn();
                 param.Mod=m3;
                 break;
+        }
+        param.Courbes= props.getProperty("Courbes").split(",");
+
+    }
+    public void PrintParameters(){
+        System.out.println("Nombre de jours: "+props.getProperty("NbrJours"));
+        System.out.println("Taille Population: "+props.getProperty("NbrPop"));
+        System.out.println("Nombre de malades: "+props.getProperty("NbrMalades"));
+        System.out.println("Spatialisation: "+(Integer.parseInt(props.getProperty("Spatialisation"))==1?"Activée":"Désactivée"));
+        System.out.println("Confinement: "+(Integer.parseInt(props.getProperty("Confinement"))==1?"Activé":"Désactivé"));
+        System.out.println("Port du masque: "+(Integer.parseInt(props.getProperty("Masque"))==1?"Activé":"Désactivé"));
+        System.out.println("Quarantaine Obligatoire: "+(Integer.parseInt(props.getProperty("Quarantaine"))==1?"Oui":"Non"));
+        System.out.println("Taux de létalité du virus: "+props.getProperty("Tauxletalité"));
+        System.out.println("R0 (Nombre moyen de personne contaminées par une seule personne) : "+props.getProperty("R0"));
+        System.out.println("Temps de Contagion/de Guerison: "+props.getProperty("TempsGuerison"));
+        System.out.println("Durée du temps d'incubation: "+props.getProperty("DureeIncubation"));
+        switch(props.getProperty("Modele")){
+            case "1": System.out.println("Modèle choisi: SIR");
+            break;
+            case "2": System.out.println("Modèle choisi: SEIR");
+            break;
+            case "3": System.out.println("Modèle choisi: SEIR avec naissances et décès naturels");
+            break;
         }
     }
 
