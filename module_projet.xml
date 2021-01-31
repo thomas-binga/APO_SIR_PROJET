@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_projet" default="compile.module.projet">
+  <dirname property="module.projet.basedir" file="${ant.file.module_projet}"/>
+  
+  <property name="module.jdk.home.projet" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.projet" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.projet" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.projet" value="-encoding UTF-8 -source 14 -target 14 ${compiler.args}"/>
+  
+  <property name="projet.output.dir" value="${module.projet.basedir}/out/production/Projet"/>
+  <property name="projet.testoutput.dir" value="${module.projet.basedir}/out/test/Projet"/>
+  
+  <path id="projet.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="projet.module.production.classpath">
+    <path refid="${module.jdk.classpath.projet}"/>
+    <pathelement location="${path.variable.maven_repository}/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar"/>
+    <pathelement location="${basedir}/xchart-3.8.0/xchart-3.8.0.jar"/>
+  </path>
+  
+  <path id="projet.runtime.production.module.classpath">
+    <pathelement location="${projet.output.dir}"/>
+    <pathelement location="${path.variable.maven_repository}/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar"/>
+    <pathelement location="${basedir}/xchart-3.8.0/xchart-3.8.0.jar"/>
+  </path>
+  
+  <path id="projet.module.classpath">
+    <path refid="${module.jdk.classpath.projet}"/>
+    <pathelement location="${projet.output.dir}"/>
+    <pathelement location="${path.variable.maven_repository}/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar"/>
+    <pathelement location="${basedir}/xchart-3.8.0/xchart-3.8.0.jar"/>
+  </path>
+  
+  <path id="projet.runtime.module.classpath">
+    <pathelement location="${projet.testoutput.dir}"/>
+    <pathelement location="${projet.output.dir}"/>
+    <pathelement location="${path.variable.maven_repository}/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar"/>
+    <pathelement location="${basedir}/xchart-3.8.0/xchart-3.8.0.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.projet">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.projet">
+    <patternset refid="excluded.from.module.projet"/>
+  </patternset>
+  
+  <path id="projet.module.sourcepath">
+    <dirset dir="${module.projet.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.projet" depends="compile.module.projet.production,compile.module.projet.tests" description="Compile module Projet"/>
+  
+  <target name="compile.module.projet.production" depends="register.custom.compilers" description="Compile module Projet; production classes">
+    <mkdir dir="${projet.output.dir}"/>
+    <javac2 destdir="${projet.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.projet}/javac">
+      <compilerarg line="${compiler.args.projet}"/>
+      <bootclasspath refid="projet.module.bootclasspath"/>
+      <classpath refid="projet.module.production.classpath"/>
+      <src refid="projet.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.projet"/>
+    </javac2>
+    
+    <copy todir="${projet.output.dir}">
+      <fileset dir="${module.projet.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.projet.tests" depends="register.custom.compilers,compile.module.projet.production" description="compile module Projet; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.projet" description="cleanup module">
+    <delete dir="${projet.output.dir}"/>
+    <delete dir="${projet.testoutput.dir}"/>
+  </target>
+</project>
