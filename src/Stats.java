@@ -7,6 +7,11 @@ import java.util.Hashtable;
 public class Stats {
     Hashtable dicStat = new Hashtable();
     ArrayList<Hashtable> memory =new ArrayList<>();
+
+    /**
+     *
+     * @param pop
+     */
     public void update(Population pop){
         dicStat.put('S',0);
         dicStat.put('E',0);
@@ -35,6 +40,7 @@ public class Stats {
         dicStat.put('D',nbrD);
         save();
     }
+
     private void save(){
         memory.add((Hashtable) dicStat.clone());
     }

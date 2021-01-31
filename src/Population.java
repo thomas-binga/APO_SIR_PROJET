@@ -44,7 +44,7 @@ public class Population {
     }
 
     /**
-     *
+     * fonction permettant de faire avancer l'état de la population
      */
     public void Avancer(){
         if(Param.Spatialisation) Deplacement(Param.PolitiquesPubliques);
@@ -162,7 +162,7 @@ public class Population {
     /**
      *
      * @param p
-     * @return
+     * @return True si la personne est contaminable, false sinon.
      */
     private boolean Contaminable(Personne p){
         int[] loc = p.position.clone();
@@ -178,7 +178,7 @@ public class Population {
      *
      * @param loc1
      * @param loc2
-     * @return
+     * @return la distance entre deux points représentés par des int[]
      */
     public double distance(int[] loc1, int[] loc2){
         int x1=loc1[0];
@@ -207,6 +207,10 @@ public class Population {
         }
     }
 
+    /**
+     *
+     * @param PP
+     */
     private void Deplacement(int[] PP){
         double C = 1; // 1 si pas de Confinement, 0.1 sinon;
         if(PP[0]==1) C=0.1;
@@ -246,7 +250,7 @@ public class Population {
 
     /**
      *
-     * @return
+     * @return un int[] reprèsentant une localisation à un endroit aléatoire.
      */
     private int[] RandomLoc(){
         if(!Param.Spatialisation) {
@@ -259,7 +263,7 @@ public class Population {
 
     /**
      *
-     * @return
+     * @return la Population
      */
     public ArrayList<Personne> getPop(){
         return Pop;

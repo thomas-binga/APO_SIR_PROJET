@@ -1,7 +1,15 @@
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Classe permettant de gérer le menu textuel
+ */
 public class Menu {
+    /**
+     *
+     * @throws FileNotFoundException
+     * @throws InterruptedException
+     */
     public void MenuDisplay() throws FileNotFoundException, InterruptedException {
         Scanner sc = new Scanner(System.in);
         System.out.print("Bonjour et bienvenue dans le simulateur SIR+ !\nVoici les paramètres enregistrés : \n\n");
@@ -40,6 +48,10 @@ public class Menu {
         System.out.print("R-> personnes guéries\n   ");
         System.out.print("D-> personnes décedées\n");
         }
+
+    /**
+     *
+     */
     public void promptEnterKey(){
         System.out.println("Appuyez sur \"ENTRER\" pour continuer...");
         Scanner scanner = new Scanner(System.in);

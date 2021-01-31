@@ -6,9 +6,18 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * Classe permettant de lire et exploitier les données de config.properties
+ */
 public class PropertyReader {
     File configFile;
     Properties props;
+
+    /**
+     *
+     * @param path
+     * @throws FileNotFoundException
+     */
     public PropertyReader(String path) throws FileNotFoundException {
         configFile = new File(path);
         try{
@@ -21,6 +30,11 @@ public class PropertyReader {
             e.printStackTrace();
         }
     }
+
+    /**
+     *
+     * @param param
+     */
     public void SetParameters(Parametres param){
         param.NbrJours=Integer.parseInt(props.getProperty("NbrJours"));
         param.NbrPop = Integer.parseInt(props.getProperty("NbrPop"));
@@ -59,6 +73,10 @@ public class PropertyReader {
         param.Courbes= props.getProperty("Courbes").split(",");
 
     }
+
+    /**
+     *
+     */
     public void PrintParameters(){
         System.out.println("Nombre de jours: "+props.getProperty("NbrJours"));
         System.out.println("Taille Population: "+props.getProperty("NbrPop"));

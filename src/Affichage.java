@@ -7,20 +7,31 @@ import org.knowm.xchart.style.Styler;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ *
+ */
 public class Affichage {
     Stats data;
+
+    /**
+     *
+     * @param data
+     */
     public Affichage(Stats data){
         this.data=data;
     }
+
+    /**
+     *
+     * @param nbr_jours
+     * @param courbes
+     */
     public void showGraphics(int nbr_jours, String[] courbes){
-        // Create Chart
         final XYChart chart = new XYChartBuilder().width(600).height(400).title("Résultats").xAxisTitle("Jours").yAxisTitle("Nombre de Personnes").build();
 
-// Customize Chart
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
 
-// Series
         double[] jours = new double[nbr_jours+1];
        for(int i=0; i<=nbr_jours; i++){
            jours[i]=i;
@@ -32,28 +43,32 @@ public class Affichage {
            if(courbes[i].equals("D")) chart.addSeries("Individus Morts", jours, getNbr('D'));
            if(courbes[i].equals("R")) chart.addSeries("Individus Rétablis", jours, getNbr('R'));
        }
-// Schedule a job for the event-dispatching thread:
-// creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
 
             @Override
             public void run() {
 
-                // Create and set up the window.
+                // Creation de la fenetre
                 JFrame frame = new JFrame("Résultats de la simulation");
                 frame.setLayout(new BorderLayout());
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-                // chart
+                // Graphique
                 JPanel chartPanel = new XChartPanel<XYChart>(chart);
                 frame.add(chartPanel, BorderLayout.CENTER);
 
-                // Display the window.
+                // Afficher la fenetre
                 frame.pack();
                 frame.setVisible(true);
             }
         });
     }
+
+    /**
+     *
+     * @param cat
+     * @return un double[] représentant le nombre de personnes dans une catégorie au fur et à mesure du temps
+     */
     public double[] getNbr(char cat){
         double[] LR = new double[data.memory.size()];
         for(int i=0; i<data.memory.size();i++){

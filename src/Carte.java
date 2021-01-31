@@ -6,6 +6,10 @@ public class Carte { // A faire: variables taille_x et taille_y à rajouter dans
     public int taille_y = 20;
     int[][] carte = new int[taille_x][taille_y];
     Personne[][] carte_p = new Personne[taille_x][taille_y];
+
+    /**
+     *
+     */
     public Carte(){
         for(int i=0; i<taille_x;i++){
             for(int j=0; j<taille_y; j++){
@@ -15,6 +19,9 @@ public class Carte { // A faire: variables taille_x et taille_y à rajouter dans
         }
     }
     @Override
+    /**
+     *
+     */
     public String toString(){
         String SR = new String();
         for(int i=0; i<taille_x;i++){

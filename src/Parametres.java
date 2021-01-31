@@ -50,14 +50,31 @@ public class Parametres {
         Eta = eta;
         Mod = mod;
     }
+
+    /**
+     *
+     * @throws FileNotFoundException
+     */
     public Parametres() throws FileNotFoundException {
         prop.SetParameters(this);
     }
+
+    /**
+     *
+     * @param age
+     * @return le paramètre gamma
+     */
     public double getGamma(int age){
         if(age < 15) return Gamma*1.2;
         if (age < 50) return Gamma;
         else return Gamma*0.8;
     }
+
+    /**
+     *
+     * @param age
+     * @return le Taux de létalité
+     */
     public double getTauxLetalite(int age){
         if(age<10) return TauxLetalite*0.2;
         if(age<20) return TauxLetalite*0.5;
@@ -67,6 +84,12 @@ public class Parametres {
         if(age<80) return TauxLetalite*2;
         else return TauxLetalite*3;
     }
+
+    /**
+     *
+     * @param age
+     * @return le paramètre Mu
+     */
     public double getMu(int age){
         if(age<10) return Mu*0.01;
         if(age<20) return Mu*0.1;

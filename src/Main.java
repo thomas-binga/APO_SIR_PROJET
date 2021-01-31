@@ -4,7 +4,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
-
+    /**
+     *
+     * @param args
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public static void main(String args[]) throws IOException, InterruptedException { // A faire: adapter coefs selon age (dans Param avec getters)+suite du sujet
 //        SEIR m = new SEIR();
 //        int[] PP = {0,0,0,0};
